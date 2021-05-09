@@ -12,6 +12,7 @@ endpoint = botapi_url + token
 offset = 0
 method = 'getUpdates'
 request = endpoint + '/' + method
+reply_text=''
 
 while(True):
     try:
@@ -40,7 +41,7 @@ while(True):
                             for line in lines:
                                 reply_text += line
                         elif(command == '/tumor'):
-                            reply_text = brainTumorPicDownload(endpoint, chat_id)
+                            reply_text = brainTumorPicDownload(endpoint, message, chat_id, token,path)
 
                         method_resp = 'sendMessage'
                         query_resp = {'chat_id' : chat_id, 'text' : reply_text}
