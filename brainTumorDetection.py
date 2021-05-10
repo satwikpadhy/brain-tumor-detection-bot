@@ -9,6 +9,8 @@ import matplotlib.pyplot as plt
 plt.style.use('dark_background')
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder 
+import pickle
+from matplotlib.pyplot import imshow
 
 encoder = OneHotEncoder()
 encoder.fit([[0], [1]]) 
@@ -90,17 +92,30 @@ plt.title('Model Loss')
 plt.ylabel('Loss')
 plt.xlabel('Epoch')
 plt.legend(['Test', 'Validation'], loc='upper right')
-plt.show()
+#plt.show()
 
 def names(number):
     if number==0:
         return 'Its a Tumor'
     else:
-        return 'No, Its not a tumor'
+        return 'Its not a tumor'
 
-#def checkAns():
+def prediction(file_name):
+    try:
+        img = Image.open(r"E:/Projects/brain-tumor-detection-bot/input/brain-mri-images-for-brain-tumor-detection/" + file_name)
+        x = np.array(img.resize((128,128)))
+        x = x.reshape(1,128,128,3)
+        res = model.predict_on_batch(x)
+        classification = np.where(res == np.amax(res))[1][0]
+        return str(res[0][classification]*100) + '% Confidence. ' + names(classification)
+    except:
+        return "Some error"
+    #print(str(res[0][classification]*100) + '% Confidence This Is ' + names(classification))
 
-from matplotlib.pyplot import imshow
+#prediction('yes/Y6.jpg')
+
+'''
+
 
 img = Image.open(r"E:/Projects/brain-tumor-detection-bot/input/brain-mri-images-for-brain-tumor-detection/no/N17.jpg")
 x = np.array(img.resize((128,128)))
@@ -118,3 +133,4 @@ res = model.predict_on_batch(x)
 classification = np.where(res == np.amax(res))[1][0]
 imshow(img)
 print(str(res[0][classification]*100) + '% Confidence This Is A ' + names(classification))
+'''
