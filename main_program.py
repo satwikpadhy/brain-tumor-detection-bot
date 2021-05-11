@@ -3,7 +3,7 @@ import requests
 import sys
 import time
 from decouple import config
-from picDownload import brainTumorPicDownload
+from picDownload import brainTumorDocDownload, brainTumorPicDownload
 
 botapi_url = 'https://api.telegram.org/bot'
 token = config('token_brain')
@@ -24,8 +24,21 @@ while(True):
             for update in result:
                 if 'message' in update:
                     message = update['message']
-        
-                    if 'text' in message:
+                    #New portion of the code
+                    if message['chat']['type'] == 'private':
+                        reply_text = ''
+                        chat_id = message['chat']['id']
+                        if 'photo' in message:
+                            photo = message['photo']
+                            file_id = photo[0]['file_id']
+                            reply_text = brainTumorPicDownload(endpoint, message, chat_id, token, path, file_id)
+                        else:
+                            reply_text = 'Please send the picture as a photo not as a document (check compress image)'
+                        method_resp = 'sendMessage'
+                        query_resp = {'chat_id' : chat_id, 'text' : reply_text}
+                        requests.get(endpoint + '/' + method_resp, params=query_resp)
+                    #New portion of the code end.
+                    elif 'text' in message:
                         text = message['text']
                         spl = text.split(' ')
                         chat_id = message['chat']['id']
@@ -41,7 +54,7 @@ while(True):
                             for line in lines:
                                 reply_text += line
                         elif(command == '/tumor'):
-                            reply_text = brainTumorPicDownload(endpoint, message, chat_id, token,path)
+                            reply_text = brainTumorDocDownload(endpoint, message, chat_id, token,path)
 
                         method_resp = 'sendMessage'
                         query_resp = {'chat_id' : chat_id, 'text' : reply_text}

@@ -11,6 +11,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder 
 import pickle
 from matplotlib.pyplot import imshow
+from decouple import config
+
+path = config('path_tumor')
 
 encoder = OneHotEncoder()
 encoder.fit([[0], [1]]) 
@@ -20,8 +23,10 @@ encoder.fit([[0], [1]])
 data = []
 paths = []
 result = []
+file_path = path + 'input/brain-mri-images-for-brain-tumor-detection/'
 
-for r, d, f in os.walk(r'E:/Projects/brain-tumor-detection-bot/input/brain-mri-images-for-brain-tumor-detection/yes'):
+#for r, d, f in os.walk(r'E:/Projects/brain-tumor-detection-bot/input/brain-mri-images-for-brain-tumor-detection/yes'):
+for r, d, f in os.walk(file_path + 'yes'):
     for file in f:
         if '.jpg' in file:
             paths.append(os.path.join(r, file))
@@ -35,7 +40,8 @@ for path in paths:
         result.append(encoder.transform([[0]]).toarray())
 
 paths = []
-for r, d, f in os.walk(r"E:/Projects/brain-tumor-detection-bot/input/brain-mri-images-for-brain-tumor-detection/no"):
+#for r, d, f in os.walk(r"E:/Projects/brain-tumor-detection-bot/input/brain-mri-images-for-brain-tumor-detection/no"):
+for r, d, f in os.walk(file_path + 'no'):
     for file in f:
         if '.jpg' in file:
             paths.append(os.path.join(r, file))
@@ -102,7 +108,8 @@ def names(number):
 
 def prediction(file_name):
     try:
-        img = Image.open(r"E:/Projects/brain-tumor-detection-bot/input/brain-mri-images-for-brain-tumor-detection/" + file_name)
+        #img = Image.open(r"E:/Projects/brain-tumor-detection-bot/input/brain-mri-images-for-brain-tumor-detection/" + file_name)
+        img = Image.open(file_path + file_name)
         x = np.array(img.resize((128,128)))
         x = x.reshape(1,128,128,3)
         res = model.predict_on_batch(x)
