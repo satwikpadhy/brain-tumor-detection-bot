@@ -27,7 +27,7 @@ def brainTumorPicDownload(endpoint, message, chat_id, token, path, file_id):
         reply_text = 'Json error'
     return reply_text
 
-
+'''
 def brainTumorDocDownload(endpoint, message, chat_id, token, path):
     if 'reply_to_message' in message:
         reply_to_message = message['reply_to_message']
@@ -66,3 +66,4 @@ def brainTumorDocDownload(endpoint, message, chat_id, token, path):
         reply_text = 'Some error occured. Have you replied to an uncompressed image with /tumor?'
         reply_text = str(message)
     return reply_text
+'''

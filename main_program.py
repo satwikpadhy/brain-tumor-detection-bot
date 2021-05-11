@@ -54,7 +54,15 @@ while(True):
                             for line in lines:
                                 reply_text += line
                         elif(command == '/tumor'):
-                            reply_text = brainTumorDocDownload(endpoint, message, chat_id, token,path)
+                            #reply_text = brainTumorPicDownload(endpoint, message, chat_id, token,path,file_id)
+                            reply_text = ''
+                            chat_id = message['chat']['id']
+                            if 'photo' in message['reply_to_message']:
+                                photo = message['reply_to_message']['photo']
+                                file_id = photo[0]['file_id']
+                                reply_text = brainTumorPicDownload(endpoint, message, chat_id, token, path, file_id)
+                            else:
+                                reply_text = 'Please send the picture as a photo not as a document (check compress image)'
 
                         method_resp = 'sendMessage'
                         query_resp = {'chat_id' : chat_id, 'text' : reply_text}
