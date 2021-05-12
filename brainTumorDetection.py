@@ -57,7 +57,7 @@ data = np.array(data)
 data.shape
 
 result = np.array(result)
-result = result.reshape(139,2)
+result = result.reshape(3009,2)
 
 x_train,x_test,y_train,y_test = train_test_split(data, result, test_size=0.2, shuffle=True, random_state=0)
 
