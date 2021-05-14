@@ -97,7 +97,15 @@ plt.title('Model Loss')
 plt.ylabel('Loss')
 plt.xlabel('Epoch')
 plt.legend(['Test', 'Validation'], loc='upper right')
-#plt.show()
+plt.show()
+
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
+plt.title('Model Accuracy')
+plt.ylabel('Accuracy')
+plt.xlabel('Epoch')
+plt.legend(['Test', 'accuracy'],loc='upper right')
+plt.show()
 
 def names(number):
     if number==0:
