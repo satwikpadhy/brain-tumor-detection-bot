@@ -123,6 +123,3 @@ def prediction(file_name):
         return str(res[0][classification]*100) + '% Confidence. ' + names(classification)
     except:
         return "Some error"
-    #print(str(res[0][classification]*100) + '% Confidence This Is ' + names(classification))
-
-#prediction('yes/Y6.jpg')
