@@ -84,7 +84,7 @@ model.add(Dense(512, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(2, activation='softmax'))
 
-model.compile(loss = "categorical_crossentropy", optimizer='Adamax')
+model.compile(loss = "categorical_crossentropy", optimizer='Adamax', metrics = ['accuracy'])
 print(model.summary())
 
 y_train.shape
